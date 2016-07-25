@@ -4,13 +4,14 @@ WLANSSID=PLEASE-CHANGE-ME
 DOMAIN=PLEASE-CHANGE-ME
 
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
-sed -ie "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
+sed -i -e "s/ssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
+sed -i -e "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
 service hostapd reload
 
 qrencode -t PNG -o /var/guestwlan/android.png -s 4 "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 qrencode -t PNG -o /var/guestwlan/windows.png -s 4 "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
-sed -e "s/<string>wlanpsk/<string>${WLANPSK}/" /var/www/html/gaestewlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
-
+sed -e "s/__wlanssid__/${WLANSSID}/g" /var/www/html/gaestewlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
+sed -i -e "s/<string>__wlanpsk__/<string>${WLANPSK}/" /var/www/html/${WLANPSK}.mobileconfig
 qrencode -t PNG -o /var/guestwlan/ios.png -s 4 "${DOMAIN}${WLANPSK}.mobileconfig"
 
 cat > /var/guestwlan/wlan.cfg <<EOF
