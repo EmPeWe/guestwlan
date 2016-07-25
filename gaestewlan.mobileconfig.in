@@ -10,23 +10,23 @@
 <key>HIDDEN_NETWORK</key>
 <false/>
 <key>Password</key>
-<string>wlanpsk</string>
+<string>__wlanpsk__</string>
 <key>PayloadIdentifier</key>
 <string>de.heise.wlan</string>
 <key>PayloadType</key>
 <string>com.apple.wifi.managed</string>
 <key>PayloadUUID</key>
-<string>heise-gaeste</string>
+<string>__wlanssid__</string>
 <key>PayloadVersion</key>
 <integer>1</integer>
 <key>SSID_STR</key>
-<string>Heise-Gaeste</string>
+<string>__wlanssid__</string>
 </dict>
 </array>
 <key>PayloadDescription</key>
-<string>Profil, um sich automatisch mit dem WLAN Heise-Gaeste zu verbinden.</string>
+<string>Profil, um sich automatisch mit dem WLAN __wlanssid__ zu verbinden.</string>
 <key>PayloadDisplayName</key>
-<string>WLAN: Heise-Gaeste</string>
+<string>WLAN: __wlanssid__</string>
 <key>PayloadIdentifier</key>
 <string>de.heise</string>
 <key>PayloadOrganization</key>
@@ -34,7 +34,7 @@
 <key>PayloadType</key>
 <string>Configuration</string>
 <key>PayloadUUID</key>
-<string>heise-wlan</string>
+<string>__wlanssid__</string>
 <key>PayloadVersion</key>
 <integer>1</integer>
 </dict>

@@ -1,15 +1,20 @@
 #!/bin/bash
+
+WLANSSID=<SET-ME>
+DOMAIN=<SET-ME>
+
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
 sed -ie "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
 service hostapd reload
 
-qrencode -t PNG -o /var/guestwlan/android.png -s 4 "WIFI:T:WPA;S:heise-gaeste;P:${WLANPSK};H:false;"
-qrencode -t PNG -o /var/guestwlan/windows.png -s 4 "WIFI;T:WPA;S:heise-gaeste;P:${WLANPSK};H:false;"
+qrencode -t PNG -o /var/guestwlan/android.png -s 4 "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
+qrencode -t PNG -o /var/guestwlan/windows.png -s 4 "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 sed -e "s/<string>wlanpsk/<string>${WLANPSK}/" /var/www/html/gaestewlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
-qrencode -t PNG -o /var/guestwlan/ios.png -s 4 "http://my.example.com/${WLANPSK}.mobileconfig"
+
+qrencode -t PNG -o /var/guestwlan/ios.png -s 4 "${DOMAIN}${WLANPSK}.mobileconfig"
 
 cat > /var/guestwlan/wlan.cfg <<EOF
 [WLAN]
-wlanssid=heise-gaeste
+wlanssid=${WLANSSID}
 wlanpsk=${WLANPSK}
 EOF
