@@ -7,5 +7,5 @@ iface br0 inet static
     address 192.168.250.1
     netmask 255.255.255.0
 
-#iface eth1 inet manual
 iface wlan0 inet manual
+#iface eth1 inet manual
