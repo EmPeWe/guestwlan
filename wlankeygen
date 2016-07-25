@@ -1,7 +1,7 @@
 #!/bin/bash
 
-WLANSSID=<SET-ME>
-DOMAIN=<SET-ME>
+WLANSSID=PLEASE-CHANGE-ME
+DOMAIN=PLEASE-CHANGE-ME
 
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
 sed -ie "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
