@@ -1,15 +1,5 @@
 ScreenManagement:
-    SlideShow:
     WLAN:
-
-<SlideShow>:
-    name: 'slideshow'
-    slide: slide
-    Image:
-        id: slide
-        keep_data: True
-        allow_stretch: True
-        nocache: True
 
 <WLAN>:
     name: 'wlan'
@@ -62,9 +52,3 @@ ScreenManagement:
                     id: windows
                     nocache: True
                     source: '/var/guestwlan/windows.png'
-        Button:
-            size_hint: 1, 0.1
-            text: 'Zurück'
-            on_release:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'slideshow'

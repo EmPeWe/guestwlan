@@ -2,6 +2,7 @@
 
 WLANSSID=PLEASE-CHANGE-ME
 DOMAIN=PLEASE-CHANGE-ME
+REFRESHINTERVAL=3600
 
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
 sed -i -e "s/ssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
@@ -18,4 +19,5 @@ cat > /var/guestwlan/wlan.cfg <<EOF
 [WLAN]
 wlanssid=${WLANSSID}
 wlanpsk=${WLANPSK}
+refresh=${REFRESHINTERVAL}
 EOF
