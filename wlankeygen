@@ -9,15 +9,15 @@ sed -i -e "s/ssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
 sed -i -e "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
 service hostapd reload
 
-qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 30 -l H "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
-qrencode -t PNG -o ${WORKDIR}/qr_windows.png -s 4 "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
+qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 10 -l H "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
+qrencode -t PNG -o ${WORKDIR}/qr_windows.png -v 10 -l H "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 sed -e "s/__wlanssid__/${WLANSSID}/g" /var/www/html/guestwlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
 sed -i -e "s/<string>__wlanpsk__/<string>${WLANPSK}/" /var/www/html/${WLANPSK}.mobileconfig
-qrencode -t PNG -o ${WORKDIR}/qr_ios.png -s 4 "${DOMAIN}${WLANPSK}.mobileconfig"
+qrencode -t PNG -o ${WORKDIR}/qr_ios.png -v 10 -l H "${DOMAIN}${WLANPSK}.mobileconfig"
 
-gm convert -page +0+0 ${WORKDIR}/qr_android.png -page +110+100 ${WORKDIR}/robot.png -mosaic ${WORKDIR}/android.png
-gm convert -page +0+0 ${WORKDIR}/qr_windows.png -mosaic ${WORKDIR}/windows.png
-gm convert -page +0+0 ${WORKDIR}/qr_ios.png -mosaic ${WORKDIR}/ios.png
+gm convert -page +0+0 ${WORKDIR}/qr_android.png -page +69+65 ${WORKDIR}/assets/android.png -mosaic ${WORKDIR}/android.png
+gm convert -page +0+0 ${WORKDIR}/qr_windows.png -page +69+69 ${WORKDIR}/assets/windows.png -mosaic ${WORKDIR}/windows.png
+gm convert -page +0+0 ${WORKDIR}/qr_ios.png -page +69+69 ${WORKDIR}/assets/ios.png -mosaic ${WORKDIR}/ios.png
 
 cat > /var/guestwlan/wlan.cfg <<EOF
 [WLAN]
