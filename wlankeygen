@@ -13,7 +13,7 @@ qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 10 -l H "WIFI:T:WPA;S:${WLANSSID
 qrencode -t PNG -o ${WORKDIR}/qr_windows.png -v 10 -l H "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 sed -e "s/__wlanssid__/${WLANSSID}/g" /var/www/html/guestwlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
 sed -i -e "s/<string>__wlanpsk__/<string>${WLANPSK}/" /var/www/html/${WLANPSK}.mobileconfig
-qrencode -t PNG -o ${WORKDIR}/qr_ios.png -v 10 -l H "${DOMAIN}${WLANPSK}.mobileconfig"
+qrencode -t PNG -o ${WORKDIR}/qr_ios.png -v 10 -l H "${DOMAIN}/${WLANPSK}.mobileconfig"
 
 gm convert -page +0+0 ${WORKDIR}/qr_android.png -page +69+65 ${WORKDIR}/assets/android.png -mosaic ${WORKDIR}/android.png
 gm convert -page +0+0 ${WORKDIR}/qr_windows.png -page +69+69 ${WORKDIR}/assets/windows.png -mosaic ${WORKDIR}/windows.png
