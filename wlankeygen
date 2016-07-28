@@ -12,9 +12,10 @@ WORKDIR=/var/guestwlan
 
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
 sed -i -e "s/ˆssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
-sed -i -e "s/ˆwpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
+sed -i -e "s/wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf # @TODO: check me again
 service hostapd reload
 
+# @TODO: make hidden network configurable
 qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 10 -l H "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 qrencode -t PNG -o ${WORKDIR}/qr_windows.png -v 10 -l H "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 sed -e "s/__wlanssid__/${WLANSSID}/g" /var/www/html/guestwlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
