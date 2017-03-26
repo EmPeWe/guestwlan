@@ -11,8 +11,8 @@ source config
 WORKDIR=/var/guestwlan
 
 WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
-sed -i -e "s/ˆssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
-sed -i -e "s/ˆwpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
+sed -i -e "s/^ssid=.*/ssid=${WLANSSID}/" /etc/hostapd/hostapd.conf
+sed -i -e "s/^wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" /etc/hostapd/hostapd.conf
 service hostapd reload
 
 qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 10 -l H "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
