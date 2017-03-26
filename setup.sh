@@ -72,4 +72,10 @@ cp config.template config
 
 sudo apt-get install qrencode
 
+######
+# setup graphicsmagick
+######
+
+sudo apt-get install graphicsmagick
+
 # END

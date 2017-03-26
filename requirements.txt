@@ -3,3 +3,4 @@ hostapd
 dnsmasq
 iptables-persistent
 qrencode
+graphicsmagick
