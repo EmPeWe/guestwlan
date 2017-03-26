@@ -1,3 +1,4 @@
 config
 config-files/etc-hostapd-hostapd.conf
+qr_*.png
 !.gitignore

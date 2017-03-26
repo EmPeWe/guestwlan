@@ -66,4 +66,10 @@ sudo ln -s $VARSYMLINK/wlankeygen /usr/local/bin/wlankeyken
 
 cp config.template config
 
+######
+# setup qrencode
+######
+
+sudo apt-get install qrencode
+
 # END
