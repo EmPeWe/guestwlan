@@ -1,3 +1,5 @@
+bridge-utils
 hostapd
 dnsmasq
+iptables-persistent
 
