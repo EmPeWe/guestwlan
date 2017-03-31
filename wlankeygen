@@ -8,22 +8,23 @@ fi
 
 WORKDIR=/var/guestwlan
 HOSTAPDCONF=$WORKDIR/config-files/etc-hostapd-hostapd.conf
+MOBILECONFIGTEMPLATE=$WORKDIR/guestwlan.mobileconfig.in
 
 source $WORKDIR/config
 
-WLANPSK=$(dd if=/dev/urandom count=1 status=none|tr -d -c 'a-z'|cut -b1-10)
+WLANPSK=$(dd if=/dev/urandom count=1 status=none | tr -d -c 'a-z' | cut -b1-10)
 sed -i -e "s/^ssid=.*/ssid=${WLANSSID}/" $HOSTAPDCONF
 sed -i -e "s/^wpa_passphrase=.*/wpa_passphrase=${WLANPSK}/" $HOSTAPDCONF
 service hostapd reload
 
 qrencode -t PNG -o ${WORKDIR}/qr_android.png -v 10 -l H "WIFI:T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
 qrencode -t PNG -o ${WORKDIR}/qr_windows.png -v 10 -l H "WIFI;T:WPA;S:${WLANSSID};P:${WLANPSK};H:false;"
-sed -e "s/__wlanssid__/${WLANSSID}/g" /var/www/html/guestwlan.mobileconfig.in > /var/www/html/${WLANPSK}.mobileconfig
+sed -e "s/__wlanssid__/${WLANSSID}/g" $MOBILECONFIGTEMPLATE > /var/www/html/${WLANPSK}.mobileconfig
 sed -i -e "s/<string>__wlanpsk__/<string>${WLANPSK}/" /var/www/html/${WLANPSK}.mobileconfig
-qrencode -t PNG -o ${WORKDIR}/qr_ios.png -v 10 -l H "${DOMAIN}/${WLANPSK}.mobileconfig"
+qrencode -t PNG -o ${WORKDIR}/qr_ios.png -v 10 -l H "${DOMAIN}:${EXTERNALPORT}/${WLANPSK}.mobileconfig"
 
 gm convert -page +0+0 ${WORKDIR}/qr_android.png -page +69+65 ${WORKDIR}/assets/android.png -mosaic ${WORKDIR}/android.png
 gm convert -page +0+0 ${WORKDIR}/qr_windows.png -page +69+69 ${WORKDIR}/assets/windows.png -mosaic ${WORKDIR}/windows.png
-#gm convert -page +0+0 ${WORKDIR}/qr_ios.png -page +69+69 ${WORKDIR}/assets/ios.png -mosaic ${WORKDIR}/ios.png
+gm convert -page +0+0 ${WORKDIR}/qr_ios.png     -page +69+69 ${WORKDIR}/assets/ios.png     -mosaic ${WORKDIR}/ios.png
 
 echo "DONE"

@@ -4,3 +4,4 @@ dnsmasq
 iptables-persistent
 qrencode
 graphicsmagick
+nginx-light

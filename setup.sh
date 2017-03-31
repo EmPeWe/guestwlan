@@ -32,9 +32,11 @@ echo "# END guestwlan setup" | sudo tee -a $DHAPD
 cp config-files/etc-hostapd-hostapd.conf.template config-files/etc-hostapd-hostapd.conf
 sudo ln -s $VARCONF/etc-hostapd-hostapd.conf /etc/hostapd/hostapd.conf
 # TODO ask for custom SSID and change it in hostapd.conf
+# TODO ask for Realtek chip, download from Adafruit, set the correct driver in hostapd.conf
+# TODO maybe checking dmsg, lsmod or lsusb
 
 ######
-# setup dnsmasq
+# setup dnsmasq for client DHCP
 ######
 
 sudo apt-get install dnsmasq
@@ -77,5 +79,19 @@ sudo apt-get install qrencode
 ######
 
 sudo apt-get install graphicsmagick
+
+######
+# setup nginx for iOS devices
+######
+
+sudo apt-get install nginx-light
+# TODO set mime-type
+# application/x-apple-aspen-config mobileconfig;
+
+######
+# restart system
+######
+
+sudo reboot
 
 # END
